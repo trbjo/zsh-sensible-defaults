@@ -230,3 +230,6 @@ else
     alias ee='ls --color=auto --no-group --group-directories-first -l --human-readable'
     alias ea='ls --color=auto --group-directories-first --all --human-readable'
 fi
+
+# strips the dollar sign when pasting from the internet
+alias \$=''
