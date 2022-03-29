@@ -181,6 +181,9 @@ fi
 alias df='df -h'
 alias grep='grep --color=auto'
 
+# Pipe stdout directly to less with LL
+alias -g LL=' |& less'
+
 if type pacman > /dev/null 2>&1; then
     alias Syu='doas pacman -Syu'
     alias U='doas pacman -U'
@@ -203,4 +206,27 @@ if type pacman > /dev/null 2>&1; then
     '
     zstyle ':completion:*:(pacman):*' ignore-line other
 
+fi
+
+alias l='ls -1A'         # Lists in one column, hidden files.
+alias ll='ls -lh'        # Lists human readable sizes.
+alias lr='ll -R'         # Lists human readable sizes, recursively.
+alias la='ll -A'         # Lists human readable sizes, hidden files.
+alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
+alias lk='ll -Sr'        # Lists sorted by size, largest last.
+alias lt='ll -tr'        # Lists sorted by date, most recent last.
+alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
+alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
+alias sl='ls'            # Correction for common spelling error.
+
+if type exa > /dev/null 2>&1; then
+    alias e='exa --group-directories-first'
+    alias es='exa --sort=oldest --long --git'
+    alias ee='exa --group-directories-first --long --git'
+    alias ea='exa --group-directories-first --long --git --all'
+else
+    alias e='ls --color=auto --group-directories-first'
+    alias es='ls --color=auto -lt --human-readable'
+    alias ee='ls --color=auto --no-group --group-directories-first -l --human-readable'
+    alias ea='ls --color=auto --group-directories-first --all --human-readable'
 fi
