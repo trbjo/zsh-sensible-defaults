@@ -233,3 +233,26 @@ fi
 
 # strips the dollar sign when pasting from the internet
 alias \$=''
+
+# Git aliases
+alias gs='git status --porcelain --short'
+alias gco='git checkout'
+alias gcp='git cherry-pick'
+alias gb='git branch'
+alias gd='git diff'
+alias ga='git add'
+alias gap='git add -p'
+alias gl='git log'
+alias gcam='git commit -am'
+alias gcm='git commit -m'
+alias gpull='git pull --rebase'
+alias gpush='git push'
+alias gdn='git diff --name-only'
+alias push='git push'
+alias pull='git pull --rebase'
+
+# Easy redirect
+alias -g silent="> /dev/null 2>&1"
+alias -g noerr="2> /dev/null"
+alias -g onerr="1> /dev/null"
+alias -g stdboth="2>&1"
