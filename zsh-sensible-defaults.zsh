@@ -83,44 +83,36 @@ zstyle -e ':completion:*:*:ssh:*:my-accounts' users-hosts \
 '[[ -f ${HOME}/.ssh/config && ${key} == hosts ]] && key=my_hosts reply=()'
 
 # - - - - - - - - - - - - - - - - - - - -
-# - - - - - - - SETOPTS - - - - - - - - -
+# - - - - - - KEY BINDINGS- - - - - - - -
 # - - - - - - - - - - - - - - - - - - - -
-
-setopt no_case_glob             # Make globbing case insensitive.
-setopt extendedglob             # Use Extended Globbing.
-setopt autocd                   # Automatically Change Directory If A Directory Is Entered.
-LISTMAX=999                     # Disable 'do you wish to see all %d possibilities'
-
-# Completion Options.
-setopt complete_in_word         # Complete From Both Ends Of A Word.
-setopt always_to_end            # Move Cursor To The End Of A Completed Word.
-setopt path_dirs                # Perform Path Search Even On Command Names With Slashes.
-setopt auto_menu                # Show Completion Menu On A Successive Tab Press.
-setopt auto_list                # Automatically List Choices On Ambiguous Completion.
-setopt auto_param_slash         # If Completed Parameter Is A Directory, Add A Trailing Slash.
-setopt no_complete_aliases
-
-setopt auto_resume              # Attempt To Resume Existing Job Before Creating A New Process.
-setopt no_beep                  # Don't beep
-setopt no_bg_nice               # Don't frob with nicelevels
-setopt no_flow_control          # Disable ^S, ^Q, ^\ #
-stty -ixon quit undef > /dev/null 2>&1           # For Vim etc; above is just for zsh.
-
 
 # Delete key
 bindkey '^[[3~' delete-char
 # Shift+Tab
 bindkey "^[[Z" reverse-menu-complete
 
-# Use smart URL pasting and escaping.
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+bindkey '^[[A'  up-line-or-beginning-search    # Arrow up
+bindkey '^[OA'  up-line-or-beginning-search
+bindkey '^[[B'  down-line-or-beginning-search  # Arrow down
+bindkey '^[OB'  down-line-or-beginning-search
+
+# - - - - - - - - - - - - - - - - - - - -
+# - - - - - - URL HANDLING- - - - - - - -
+# - - - - - - - - - - - - - - - - - - - -
+
 autoload -Uz bracketed-paste-url-magic url-quote-magic
 zle -N bracketed-paste bracketed-paste-url-magic
 zle -N self-insert url-quote-magic
 (( ${+ZSH_AUTOSUGGEST_CLEAR_WIDGETS} )) && ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=('bracketed-paste-url-magic' 'url-quote-magic')
 
-#
-# TERMINAL CAPABILITES
-#
+# - - - - - - - - - - - - - - - - - - - -
+# - - - - -TERMINAL CAPABILITIES- - - - -
+# - - - - - - - - - - - - - - - - - - - -
 
 export LESS_TERMCAP_md=$'\E[1;34m'    # Begins bold, blue.
 export LESS_TERMCAP_me=$'\E[0m'       # Ends bold, blue.
@@ -137,19 +129,54 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
     add-zle-hook-widget -Uz line-finish stop-application-mode
 fi
 
+#-F quit if one screen
+# -i ignore case
+# -R raw
+# -w highlight unread part of page after scroll
+# -z-10 scroll 10 lines less than page height
+# --incsearch incremental search
+# +Gg show percentage
+export LESS="--raw-control-chars \
+--quit-if-one-screen \
+--ignore-case \
+--hilite-unread \
+-z-10 \
+--tilde \
+--incsearch \
++Gg"
 
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-
-bindkey '^[[A'  up-line-or-beginning-search    # Arrow up
-bindkey '^[OA'  up-line-or-beginning-search
-bindkey '^[[B'  down-line-or-beginning-search  # Arrow down
-bindkey '^[OB'  down-line-or-beginning-search
+export PAGER=less
+export SYSTEMD_LESS="FRSMK"
+export GREP_COLOR='1;38;5;20;48;5;16'
 
 # allows moving (renaming) files with regexes.
 # E.g: zmv '(**/)(*).jsx' '$1$2.tsx'
 autoload zmv
 alias zmv='noglob zmv -w'
 
+# - - - - - - - - - - - - - - - - - - - -
+# - - - - - - - ALIASES - - - - - - - - -
+# - - - - - - - - - - - - - - - - - - - -
+
+if type rg > /dev/null 2>&1; then
+    export RIPGREP_OPTS='\
+    --context-separator ... \
+    --smart-case\
+    --colors match:bg:6\
+    --colors match:fg:226\
+    --colors line:fg:249\
+    --colors line:style:nobold\
+    --colors path:fg:4\
+    --no-messages\
+    --max-columns=$(( COLUMNS - 28 )) \
+    --max-columns-preview'
+
+    alias rgg="noglob rg $RIPGREP_OPTS --no-ignore-vcs --hidden --glob "!clipman.json" --glob "!.zhistory""
+    alias rg="noglob rg $RIPGREP_OPTS --glob "!clipman.json" --glob "!.zhistory""
+    alias -g G=" |& rg $RIPGREP_OPTS"
+else
+    alias -g G=' |& grep --color=auto'
+fi
+
+alias df='df -h'
+alias grep='grep --color=auto'
