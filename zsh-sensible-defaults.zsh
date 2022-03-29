@@ -180,3 +180,27 @@ fi
 
 alias df='df -h'
 alias grep='grep --color=auto'
+
+if type pacman > /dev/null 2>&1; then
+    alias Syu='doas pacman -Syu'
+    alias U='doas pacman -U'
+    alias Sy='doas pacman -Sy'
+    alias S='doas pacman -S'
+    alias Ss='yay -Ss'
+    alias Rsn='doas pacman -Rsn'
+    alias Rns='doas pacman -Rsn'
+    alias Rdd='doas pacman -Rdd'
+    alias Qs='pacman -Qs'
+    # list packages owned by
+    alias Qo='pacman -Qo'
+    alias Qqs='pacman -Qqs'
+    alias Qq='pacman -Qq'
+
+    alias Qtdq='doas pacman -Rsn $(pacman -Qtdq)'
+    zstyle ':completion::complete:pacman:*' file-patterns '
+      *.pkg.tar.zst:source-files:"Pacman archive"
+      *(D-/):local-directories:"local directory"
+    '
+    zstyle ':completion:*:(pacman):*' ignore-line other
+
+fi
