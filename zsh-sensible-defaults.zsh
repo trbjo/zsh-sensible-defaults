@@ -102,6 +102,22 @@ bindkey '^[[B'  down-line-or-beginning-search  # Arrow down
 bindkey '^[OB'  down-line-or-beginning-search
 
 # - - - - - - - - - - - - - - - - - - - -
+# - - - - - - URL HANDLING- - - - - - - -
+# - - - - - - - - - - - - - - - - - - - -
+
+autoload -Uz bracketed-paste-url-magic url-quote-magic
+zle -N bracketed-paste bracketed-paste-url-magic
+zle -N self-insert url-quote-magic
+
+# There is a circular dependency here:
+# These autoloads must come before syntax-hightligting.
+# syntax-hightligting in turn must come before autosuggestions.
+# And we need to add these to autoload widgets to
+# ZSH_AUTOSUGGEST_CLEAR_WIDGETS after it has been sourced.
+# So put this somewhere after autosuggestions have been loaded:
+# ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=('bracketed-paste-url-magic' 'url-quote-magic')
+
+# - - - - - - - - - - - - - - - - - - - -
 # - - - - -TERMINAL CAPABILITIES- - - - -
 # - - - - - - - - - - - - - - - - - - - -
 
