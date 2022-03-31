@@ -109,13 +109,30 @@ autoload -Uz bracketed-paste-url-magic url-quote-magic
 zle -N bracketed-paste bracketed-paste-url-magic
 zle -N self-insert url-quote-magic
 
-# There is a circular dependency here:
-# These autoloads must come before syntax-hightligting.
-# syntax-hightligting in turn must come before autosuggestions.
-# And we need to add these to autoload widgets to
-# ZSH_AUTOSUGGEST_CLEAR_WIDGETS after it has been sourced.
-# So put this somewhere after autosuggestions have been loaded:
-# ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=('bracketed-paste-url-magic' 'url-quote-magic')
+# A bit tedious, but this hack is necessary if we want to make sure
+# bracketed-paste-url-magic and url-quote-magic is added to ZSH_AUTOSUGGEST_CLEAR_WIDGETS,
+# irrespective of the order with which we load these plugins
+
+__add_url_magic_to_zsh_autosuggest_clear_widgets() {
+    (( ${+ZSH_AUTOSUGGEST_CLEAR_WIDGETS} )) && {
+        ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=("bracketed-paste-url-magic" "url-quote-magic")
+        add-zsh-hook -d precmd __add_url_magic_to_zsh_autosuggest_clear_widgets
+        add-zsh-hook -d preexec __remove_url_magic
+        unfunction __add_url_magic_to_zsh_autosuggest_clear_widgets
+        unfunction __remove_url_magic
+    }
+}
+
+__remove_url_magic() {
+    add-zsh-hook -d precmd __add_url_magic_to_zsh_autosuggest_clear_widgets
+    add-zsh-hook -d preexec __remove_url_magic
+    unfunction __add_url_magic_to_zsh_autosuggest_clear_widgets
+    unfunction __remove_url_magic
+}
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd __add_url_magic_to_zsh_autosuggest_clear_widgets
+add-zsh-hook preexec __remove_url_magic
 
 # - - - - - - - - - - - - - - - - - - - -
 # - - - - -TERMINAL CAPABILITIES- - - - -
