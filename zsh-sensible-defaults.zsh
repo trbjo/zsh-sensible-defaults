@@ -259,6 +259,7 @@ fi
 alias \$=''
 
 # Git aliases
+alias glo="git log --pretty=format:'%Cred%h %Cgreen%cr %C(blue)%an%Creset%Creset ●%d%Creset %s' --abbrev-commit"
 alias gs='git status --porcelain --short'
 alias gco='git checkout'
 alias gcp='git cherry-pick'
