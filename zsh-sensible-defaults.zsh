@@ -194,6 +194,8 @@ if type rg > /dev/null 2>&1; then
     --no-messages\
     --max-columns=$(( COLUMNS - 28 )) \
     --max-columns-preview'
+    # grep for ipv4 addresses
+    ipv4addrs() { rg --pcre2 $RIPGREP_OPTS '\b(?<!\.)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?!\.)\b' }
 
     alias rgg="noglob rg $RIPGREP_OPTS --no-ignore-vcs --hidden --glob "!clipman.json" --glob "!.zhistory""
     alias rg="noglob rg $RIPGREP_OPTS --glob "!clipman.json" --glob "!.zhistory""
