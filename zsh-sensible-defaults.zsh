@@ -281,3 +281,7 @@ alias -g silent="> /dev/null 2>&1"
 alias -g noerr="2> /dev/null"
 alias -g onerr="1> /dev/null"
 alias -g stdboth="2>&1"
+
+# Chmod
+alias +='chmod +x'
+alias -='chmod -x'
