@@ -324,6 +324,7 @@ export LESS="--raw-control-chars \
 export PAGER=less
 export SYSTEMD_LESS="FRSMK"
 export GREP_COLOR='1;38;5;20;48;5;16'
+(( ${+SSH_TTY} )) && export TERM="xterm-256color"
 
 # allows moving (renaming) files with regexes.
 # E.g: zmv '(**/)(*).jsx' '$1$2.tsx'
