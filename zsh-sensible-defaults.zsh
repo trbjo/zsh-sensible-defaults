@@ -136,6 +136,21 @@ function _enum_exit_code() {
 }
 
 # - - - - - - - - - - - - - - - - - - - -
+# - - - - - BYTE COMPILING- - - - - - - -
+# - - - - - - - - - - - - - - - - - - - -
+
+compile_or_recompile() {
+    local plugin="$1"
+    set --
+    { [[ -f "${plugin}" ]] && [[ ! -f "${plugin}.zwc" ]] }\
+    || [[ "${plugin}" -nt "${plugin}.zwc" ]] &&\
+    zcompile "${plugin}"
+}
+
+compile_or_recompile "${ZDOTDIR:-$HOME}/.zcompdump" &!
+compile_or_recompile "${ZDOTDIR:-$HOME}/.zshrc" &!
+
+# - - - - - - - - - - - - - - - - - - - -
 # - - - - - - - COMPLETION- - - - - - - -
 # - - - - - - - - - - - - - - - - - - - -
 
