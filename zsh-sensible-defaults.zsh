@@ -440,5 +440,7 @@ alias -g stdboth="2>&1"
 
 # aliases for mac
 if [[ "$(uname)" == "Darwin" ]]; then
-    alias subl='(/Applications/Sublime\ Text.app/Contents/MacOS/sublime_text "$@" &! )'
+    subl() {
+        /Applications/Sublime\ Text.app/Contents/MacOS/sublime_text $@ &!
+    }
 fi
