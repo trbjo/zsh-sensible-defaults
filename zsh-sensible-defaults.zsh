@@ -436,3 +436,10 @@ alias -g silent="> /dev/null 2>&1"
 alias -g noerr="2> /dev/null"
 alias -g onerr="1> /dev/null"
 alias -g stdboth="2>&1"
+
+
+# aliases for mac
+if [[ "$(uname)" == "Darwin" ]]; then
+
+    alias subl='(/Applications/Sublime\ Text.app/Contents/MacOS/sublime_text .local/bin/subl "$@" &! )'
+fi
