@@ -335,6 +335,9 @@ alias zmv='noglob zmv -w'
 # - - - - - - - ALIASES - - - - - - - - -
 # - - - - - - - - - - - - - - - - - - - -
 
+# allows pasting from the internet
+alias '#'=doas
+
 if type rg > /dev/null 2>&1; then
     export RIPGREP_OPTS='\
     --context-separator ... \
