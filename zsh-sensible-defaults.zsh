@@ -322,7 +322,11 @@ export LESS="--raw-control-chars \
 [[ -z ${SSH_TTY} ]] && LESS+=" --incsearch"
 
 export PAGER=less
-export SYSTEMD_LESS="FRSMK"
+if type systemctl > /dev/null 2>&1; then
+    export SYSTEMD_LESS="FRSMK"
+    alias logs='journalctl -u'
+fi
+
 export GREP_COLOR='1;38;5;20;48;5;16'
 (( ${+SSH_TTY} )) && export TERM="xterm-256color"
 
