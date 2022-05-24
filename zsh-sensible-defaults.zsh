@@ -7,7 +7,7 @@ export LS_COLORS="*.json=35:*.JSON=35:*.pdf=31:*.PDF=31:*.djvu=31:*.DJVU=31:*.ep
 
 autoload -U colors && colors
 
-zle_highlight=(region:bg=153 special:bg=153
+zle_highlight=(region:bg=153,fg=7 special:bg=153
                suffix:bg=153 paste:bg=153 isearch:bg=153)
 
 _raw_to_zsh_color() {
