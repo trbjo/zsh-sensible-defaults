@@ -181,7 +181,9 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 # zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'm:{a-zA-Z}={A-Za-z} r:|=*' 'm:{a-zA-Z}={A-Za-z} l:|=*'
 # zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'm:{a-zA-Z}={A-Za-z} l:|=* r:|=*'
+# zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'm:{a-zA-Z}={A-Za-z} l:|=* r:|=*'
+# zstyle ':completion:*' matcher-list 'l:|=* r:|=* m:{a-zA-Z}={A-Za-z}' 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' matcher-list '' 'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
 
 # Fuzzy match mistyped completions.
 zstyle ':completion:*' completer _complete _match _approximate
