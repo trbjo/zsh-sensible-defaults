@@ -73,7 +73,7 @@ _colorizer_abs_path() {
 }
 
 _colorizer() {
-    (( ${#@} > 1 )) && print "\x1b[31;1m_colorizer: MORE THAN ONE INPUT ARG\x1b[39m" && return 42
+    (( ${#@} > 1 )) && print "\x1b[31;1m_colorizer: MORE THAN ONE INPUT ARG\x1b[39m\e[0m" && return 42
     local file=${(QQQ)1}
 
     [[ -z $this_dir ]] && local this_dir="${${${1}/$PWD\//}/$HOME/\~}"
