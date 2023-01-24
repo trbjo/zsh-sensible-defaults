@@ -353,15 +353,14 @@ if type rg > /dev/null 2>&1; then
     --colors line:fg:249\
     --colors line:style:nobold\
     --colors path:fg:4\
-    --no-messages\
-    --max-columns=$(( COLUMNS - 28 )) \
-    --max-columns-preview'
+    --no-messages'
     # grep for ipv4 addresses
     ipv4addrs() { rg --pcre2 $RIPGREP_OPTS '\b(?<!\.)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?!\.)\b' }
 
     alias rgg="noglob rg $RIPGREP_OPTS --no-ignore-vcs --hidden --glob "!clipman.json" --glob "!.zhistory""
     alias rg="noglob rg $RIPGREP_OPTS --glob "!clipman.json" --glob "!.zhistory""
     alias -g G=" |& rg $RIPGREP_OPTS"
+    alias -g HL=" |& rg $RIPGREP_OPTS -C 9999999999999999"
 else
     alias -g G=' |& grep --color=auto'
 fi
@@ -396,16 +395,16 @@ if type pacman > /dev/null 2>&1; then
 
 fi
 
-alias l='ls -1A'         # Lists in one column, hidden files.
-alias ll='ls -lh'        # Lists human readable sizes.
-alias lr='ll -R'         # Lists human readable sizes, recursively.
-alias la='ll -A'         # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
-alias lk='ll -Sr'        # Lists sorted by size, largest last.
-alias lt='ll -tr'        # Lists sorted by date, most recent last.
-alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
-alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
-alias sl='ls'            # Correction for common spelling error.
+alias l='ls -1A --color=auto'         # Lists in one column, hidden files.
+alias ll='ls -lh --color=auto'        # Lists human readable sizes.
+alias lr='ll -R --color=auto'         # Lists human readable sizes, recursively.
+alias la='ll -A --color=auto'         # Lists human readable sizes, hidden files.
+alias lm='la | "$PAGER" --color=auto' # Lists human readable sizes, hidden files through pager.
+alias lk='ll -Sr --color=auto'        # Lists sorted by size, largest last.
+alias lt='ll -tr --color=auto'        # Lists sorted by date, most recent last.
+alias lc='lt -c --color=auto'         # Lists sorted by date, most recent last, shows change time.
+alias lu='lt -u --color=auto'         # Lists sorted by date, most recent last, shows access time.
+alias ls='ls --color=auto'
 
 if type exa > /dev/null 2>&1; then
     alias e='exa --group-directories-first'
