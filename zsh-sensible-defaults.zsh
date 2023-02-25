@@ -98,13 +98,13 @@ _colorizer() {
             _file_and_color="\x1b[${_file_color:-39}m${dir_parts[-1]}"
         fi
     elif [[ -d "$file" ]]; then
-        _file_and_color="\x1b[${_di_color_raw}m${dir_parts[-1]}\x1b[39m/"
+        _file_and_color="\x1b[${_di_color_raw}m${dir_parts[-1]}\x1b[39m"
     elif [[ -h "$file" ]]; then
-        _file_and_color="\x1b[${_ln_color_raw}m${dir_parts[-1]}\x1b[39m/"
+        _file_and_color="\x1b[${_ln_color_raw}m${dir_parts[-1]}\x1b[39m"
     elif [[ -c "$file" ]]; then
-        _file_and_color="\x1b[${_cd_color_raw}m${dir_parts[-1]}\x1b[39m/"
+        _file_and_color="\x1b[${_cd_color_raw}m${dir_parts[-1]}\x1b[39m"
     elif [[ -b "$file" ]]; then
-        _file_and_color="\x1b[${_bd_color_raw}m${dir_parts[-1]}\x1b[39m/"
+        _file_and_color="\x1b[${_bd_color_raw}m${dir_parts[-1]}\x1b[39m"
     elif [[ ! -e "$file" ]]; then
         _file_and_color="\x1b[31;1m${dir_parts[-1]}\x1b[0m\x1b[39m"
     else
