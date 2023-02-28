@@ -68,7 +68,7 @@ _raw_to_zsh_color() {
 }
 
 _colorizer_abs_path() {
-    local this_dir="${${1}/$HOME/\~}"
+    local this_dir="${${1}/$HOME/~}"
     _colorizer $1
 }
 
