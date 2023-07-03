@@ -436,9 +436,9 @@ alias gl='git log'
 alias gcam='git commit -am'
 alias gcm='git commit -m'
 alias gpull='git pull --rebase'
-alias gpush='git push || git push --set-upstream origin $(git branch --show-current)'
 alias gdn='git diff --name-only'
-alias push='git push || git push --set-upstream origin $(git branch --show-current)'
+alias push='git push'
+alias pushorigin='git push --set-upstream origin $(git branch --show-current)'
 alias pull='git pull --rebase'
 
 # Easy redirect
