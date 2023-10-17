@@ -3,7 +3,7 @@
 # - - - - - - - - - - - - - - - - - - - -
 
 
-export LS_COLORS="*.part=38;5;18:*.PART=38;5;18:*.json=35:*.JSON=35:*.pdf=31:*.PDF=31:*.djvu=31:*.DJVU=31:*.epub=31:*.EPUB=31:*.zip=33:*.ZIP=33:*.xz=33:*.XZ=33:*.gz=38;5;215:*.zst=38;5;215:*.tz=38;5;215:*.sublime-package=33:*.jpg=34:*.JPG=34:*.jpeg=34:*.JPEG=34:*.png=34:*.PNG=34:*.webp=34:*.WEBP=34:*.svg=34:*.SVG=34:*.gif=34:*.GIF=34:*.bmp=34:*.BMP=34:*.tif=34:*.TIF=34:*.tiff=34:*.TIFF=34:*.psd=34:*.PSD=34:*.mkv=35:*.mp4=35:*.mov=35:*.mp3=35:*.avi=35:*.mpg=35:*.m4v=35:*.oga=35:*.MKV=35:*.MP4=35:*.MOV=35:*.MP3=35:*.AVI=35:*.MPG=35:*.M4V=35:*.OGA=35:*.doc=36:*.docx=36:*.odt=36:*.ods=36:*.csv=35:*.CSV=35:*.xlsx=36:*.xls=36:*.DOC=36:*.DOCX=36:*.ODT=36:*.ODS=36:*.XLSX=36:*.XLS=36:*.html=38;5;208:*.HTML=38;5;208:*.log=38;5;18:*.pyc=38;5;18:*.LOG=38;5;18:*.zwc=38;5;18:*.md=33;01:*.MD=33;01:bd=35;1:ex=48;5;153:cd=35;1:di=36:ln=0;36;1:*.sublime-keymap=48;5;154;38;5;208:*.sublime-settings=48;5;154;38;5;208:*.sublime-project=48;5;154;38;5;208:*.sublime-color-scheme=48;5;154;38;5;208:*.sublime-commands=48;5;154;38;5;208:*.sublime-mousemap=48;5;154;38;5;208:*.sublime-syntax=48;5;154;38;5;208:*.sublime-build=48;5;154;38;5;208:*.py=32"
+export LS_COLORS="*.part=38;5;18:*.PART=38;5;18:*.json=35:*.JSON=35:*.pdf=31:*.PDF=31:*.djvu=31:*.DJVU=31:*.epub=31:*.EPUB=31:*.zip=33:*.ZIP=33:*.xz=33:*.XZ=33:*.gz=38;5;215:*.zst=38;5;215:*.tz=38;5;215:*.sublime-package=33:*.jpg=34:*.JPG=34:*.jpeg=34:*.JPEG=34:*.png=34:*.PNG=34:*.webp=34:*.WEBP=34:*.svg=34:*.SVG=34:*.gif=34:*.GIF=34:*.bmp=34:*.BMP=34:*.tif=34:*.TIF=34:*.tiff=34:*.TIFF=34:*.psd=34:*.PSD=34:*.mkv=35:*.mp4=35:*.mov=35:*.mp3=35:*.avi=35:*.mpg=35:*.m4v=35:*.oga=35:*.MKV=35:*.MP4=35:*.MOV=35:*.MP3=35:*.AVI=35:*.MPG=35:*.M4V=35:*.OGA=35:*.doc=36:*.docx=36:*.odt=36:*.ods=36:*.csv=35:*.CSV=35:*.xlsx=36:*.xls=36:*.DOC=36:*.DOCX=36:*.ODT=36:*.ODS=36:*.XLSX=36:*.XLS=36:*.html=38;5;208:*.HTML=38;5;208:*.log=38;5;18:*.pyc=38;5;18:*.LOG=38;5;18:*.zwc=38;5;18:*.md=33;01:*.MD=33;01:bd=35;1:ex=48;5;153:cd=35;1:di=36:ln=0;36;1:*.sublime-keymap=48;5;154;38;5;208:*.sublime-settings=48;5;154;38;5;208:*.sublime-project=48;5;154;38;5;208:*.sublime-color-scheme=48;5;154;38;5;208:*.sublime-commands=48;5;154;38;5;208:*.sublime-mousemap=48;5;154;38;5;208:*.sublime-syntax=48;5;154;38;5;208:*.sublime-build=48;5;154;38;5;208:*.py=32:*.go=38;5;45"
 
 autoload -U colors && colors
 
@@ -292,10 +292,13 @@ add-zsh-hook preexec __remove_url_magic
 # - - - - -TERMINAL CAPABILITIES- - - - -
 # - - - - - - - - - - - - - - - - - - - -
 
-export LESS_TERMCAP_md=$'\E[1;34m'    # Begins bold, blue.
-export LESS_TERMCAP_me=$'\E[0m'       # Ends bold, blue.
-export LESS_TERMCAP_us=$'\E[1;36m'  # Begins bold, cyan
-export LESS_TERMCAP_ue=$'\E[0m'       # Ends bold, cyan
+export LESS_TERMCAP_md=$'\e[1;34m'    # Begins bold, blue.
+export LESS_TERMCAP_me=$'\e[0m'       # Ends bold, blue.
+export LESS_TERMCAP_us=$'\e[1;36m'  # Begins bold, cyan
+export LESS_TERMCAP_ue=$'\e[0m'       # Ends bold, cyan
+
+export LESS_TERMCAP_so=$'\e[48;5;154;38;5;208m'
+export LESS_TERMCAP_se=$'\e[0m'
 
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
     # Enable application mode when zle is active
@@ -329,13 +332,15 @@ if type systemctl > /dev/null 2>&1; then
     alias logs='journalctl -u'
 fi
 
-export GREP_COLOR='1;38;5;20;48;5;16'
+export GREP_COLORS='mt=1;38;5;20;48;5;16'
 (( ${+SSH_TTY} )) && export TERM="xterm-256color"
 
 # allows moving (renaming) files with regexes.
 # E.g: zmv '(**/)(*).jsx' '$1$2.tsx'
 autoload zmv
 alias zmv='noglob zmv -w'
+alias zcp='noglob zmv -Cw'
+alias zln='noglob zmv -Lw'
 
 # - - - - - - - - - - - - - - - - - - - -
 # - - - - - - - ALIASES - - - - - - - - -
@@ -345,23 +350,16 @@ alias zmv='noglob zmv -w'
 alias '#'=doas
 
 if type rg > /dev/null 2>&1; then
-    export RIPGREP_OPTS='\
-    --context-separator ... \
-    --smart-case\
-    --colors match:bg:6\
-    --colors match:fg:226\
-    --colors line:fg:249\
-    --colors line:style:nobold\
-    --colors path:fg:4\
-    --no-messages'
     # grep for ipv4 addresses
-    ipv4addrs() { rg --pcre2 $RIPGREP_OPTS '\b(?<!\.)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?!\.)\b' }
+    ipv4addrs() { rg --pcre2 '\b(?<!\.)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?!\.)\b' }
 
-    alias rgg="noglob rg $RIPGREP_OPTS --no-ignore-vcs --hidden --glob "!.zhistory""
-    alias rg="noglob rg $RIPGREP_OPTS --glob "!.zhistory""
-    alias rgf="noglob rg $RIPGREP_OPTS --fixed-strings --glob "!.zhistory""
-    alias -g G=" |& rg $RIPGREP_OPTS"
-    alias -g HL=" |& rg $RIPGREP_OPTS -C 9999999999999999"
+    alias rgg="noglob rg --no-ignore-vcs --hidden --glob "!.zhistory""
+    alias rg="noglob rg --glob "!.zhistory""
+    alias rgf="noglob rg --fixed-strings --glob "!.zhistory""
+    alias -g G=" |& rg --"
+    alias -g GG=" |& rg"
+    alias -g GF=" |& rg --fixed-strings --"
+    alias -g HL=" |& rg -C 9999999999999999 --"
 else
     alias -g G=' |& grep --color=auto'
 fi
@@ -411,12 +409,13 @@ alias cal='cal --monday' # monday as first day of the week
 
 if type exa > /dev/null 2>&1; then
     alias e='exa --group-directories-first'
-    alias es='exa --sort=oldest --long --git'
+    alias esort='exa --sort=oldest --long --git'
     alias ee='exa --group-directories-first --long --git'
+    alias etree='exa --group-directories-first --long --git --tree'
     alias ea='exa --group-directories-first --long --git --all'
 else
     alias e='ls --color=auto --group-directories-first'
-    alias es='ls --color=auto -lt --human-readable'
+    alias esort='ls --color=auto -lt --human-readable'
     alias ee='ls --color=auto --no-group --group-directories-first -l --human-readable'
     alias ea='ls --color=auto --group-directories-first --all --human-readable'
 fi
