@@ -329,7 +329,6 @@ export LESS="--raw-control-chars \
 export PAGER=less
 if type systemctl > /dev/null 2>&1; then
     export SYSTEMD_LESS="FRSMK"
-    alias logs='journalctl -u'
 fi
 
 export GREP_COLORS='mt=1;38;5;20;48;5;16'
@@ -346,23 +345,6 @@ alias zln='noglob zmv -Lw'
 # - - - - - - - ALIASES - - - - - - - - -
 # - - - - - - - - - - - - - - - - - - - -
 
-# allows pasting from the internet
-alias '#'=doas
-
-if type rg > /dev/null 2>&1; then
-    # grep for ipv4 addresses
-    ipv4addrs() { rg --pcre2 '\b(?<!\.)(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(?!\.)\b' }
-
-    alias rgg="noglob rg --no-ignore-vcs --hidden --glob "!.zhistory""
-    alias rg="noglob rg --glob "!.zhistory""
-    alias rgf="noglob rg --fixed-strings --glob "!.zhistory""
-    alias -g G=" |& rg --"
-    alias -g GG=" |& rg"
-    alias -g GF=" |& rg --fixed-strings --"
-    alias -g HL=" |& rg -C 9999999999999999 --"
-else
-    alias -g G=' |& grep --color=auto'
-fi
 
 alias df='df -h'
 alias grep='grep --color=auto'
@@ -371,21 +353,6 @@ alias grep='grep --color=auto'
 alias -g LL=' |& less'
 
 if type pacman > /dev/null 2>&1; then
-    alias Syu='doas pacman -Syu'
-    alias U='doas pacman -U'
-    alias Sy='doas pacman -Sy'
-    alias S='doas pacman -S'
-    alias Ss='yay -Ss'
-    alias Rsn='doas pacman -Rsn'
-    alias Rns='doas pacman -Rsn'
-    alias Rdd='doas pacman -Rdd'
-    alias Qs='pacman -Qs'
-    # list packages owned by
-    alias Qo='pacman -Qo'
-    alias Qqs='pacman -Qqs'
-    alias Qq='pacman -Qq'
-
-    alias Qtdq='doas pacman -Rsn $(pacman -Qtdq)'
     zstyle ':completion::complete:pacman:*' file-patterns '
       *.pkg.tar.zst:source-files:"Pacman archive"
       *(D-/):local-directories:"local directory"
@@ -406,51 +373,3 @@ alias lu='lt -u --color=auto'         # Lists sorted by date, most recent last, 
 alias ls='ls --color=auto'
 
 alias cal='cal --monday' # monday as first day of the week
-
-if type exa > /dev/null 2>&1; then
-    alias e='exa --group-directories-first'
-    alias esort='exa --sort=oldest --long --git'
-    alias ee='exa --group-directories-first --long --git'
-    alias etree='exa --group-directories-first --long --git --tree'
-    alias ea='exa --group-directories-first --long --git --all'
-else
-    alias e='ls --color=auto --group-directories-first'
-    alias esort='ls --color=auto -lt --human-readable'
-    alias ee='ls --color=auto --no-group --group-directories-first -l --human-readable'
-    alias ea='ls --color=auto --group-directories-first --all --human-readable'
-fi
-
-# strips the dollar sign when pasting from the internet
-alias \$=''
-
-# Git aliases
-alias glo="git log --pretty=format:'%Cred%h %Cgreen%cr %C(blue)%an%Creset%Creset ●%d%Creset %s' --abbrev-commit"
-alias gs='git status --porcelain --short'
-alias gco='git checkout'
-alias gcp='git cherry-pick'
-alias gb='git branch'
-alias gd='git diff'
-alias ga='git add'
-alias gap='git add -p'
-alias gl='git log'
-alias gcam='git commit -am'
-alias gcm='git commit -m'
-alias gpull='git pull --rebase'
-alias gdn='git diff --name-only'
-alias push='git push'
-alias pushorigin='git push --set-upstream origin $(git branch --show-current)'
-alias pull='git pull --rebase'
-
-# Easy redirect
-alias -g silent="> /dev/null 2>&1"
-alias -g noerr="2> /dev/null"
-alias -g onerr="1> /dev/null"
-alias -g stdboth="2>&1"
-
-
-# aliases for mac
-if [[ "$(uname)" == "Darwin" ]]; then
-    subl() {
-        /Applications/Sublime\ Text.app/Contents/MacOS/sublime_text $@ &!
-    }
-fi
