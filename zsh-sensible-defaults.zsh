@@ -310,21 +310,7 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
     add-zle-hook-widget -Uz line-finish stop-application-mode
 fi
 
-#-F quit if one screen
-# -i ignore case
-# -R raw
-# -w highlight unread part of page after scroll
-# -z-10 scroll 10 lines less than page height
-# --incsearch incremental search
-export LESS="--raw-control-chars \
---quit-if-one-screen \
---ignore-case \
---hilite-unread \
--z-10 \
---tilde"
-
-# old versions of less do not have incsearc
-[[ -z ${SSH_TTY} ]] && LESS+=" --incsearch"
+export LESS='--incsearch -R -+X -+F --tilde +Gg'
 
 export PAGER=less
 if type systemctl > /dev/null 2>&1; then
